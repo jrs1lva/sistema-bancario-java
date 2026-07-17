@@ -6,13 +6,24 @@ public class Conta {
 	private int saldo;
 	private int limite;
 	
-	public Conta(Usuario usuario, String tipo, int saldo, int limite) {
+	public Conta(Usuario usuario, String tipo, int limite) {
 		this.usuario = usuario;
 		this.tipo = tipo;
-		this.saldo = saldo;
+		this.saldo = 0;
 		this.limite = limite;
 	}
 	
+	public void sacar() {
+		
+	}
+	
+	public void depositar() {
+		
+	}
+	
+	public void mostrarExtrato() {
+		
+	}
 	//mostra extrato, realiza depositos, realiza saques
 	
 }

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Usuario {
-	private String nome;
+	private final String nome;
 	private String apelido;
 	private final LocalDate DATANASCIMENTO;
 	private final String CPF;
@@ -25,10 +25,6 @@ public class Usuario {
 
 	public String getNome() {
 		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public String getApelido() {

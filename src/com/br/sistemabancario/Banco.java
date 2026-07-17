@@ -18,7 +18,28 @@ public class Banco {
 		this.contas = contas;
 	}
 	
+    public void cadastrarUsuario() {
+    	
+    }
 	
+    public void criarConta() {
+    	
+    }
     
+    public Usuario buscarUsuario() {
+		return null;
+    }
+    
+    public Conta buscarConta() {
+    	return null;
+    }
+    
+    public ArrayList<Usuario> listarUsuarios() {
+		return usuarios;
+    }
+	
+    public ArrayList<Conta> listarContas() {
+    	return contas;
+    }
     
 }
