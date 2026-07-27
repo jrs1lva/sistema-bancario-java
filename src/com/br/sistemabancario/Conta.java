@@ -2,28 +2,72 @@ package com.br.sistemabancario;
 
 public class Conta {
 	private Usuario usuario;
-	private String tipo;
-	private int saldo;
+	private Tipo tipo;
+	private float saldo;
 	private int limite;
 	
-	public Conta(Usuario usuario, String tipo, int limite) {
+	//mostra extrato, realiza depositos, realiza saques
+	
+	public Conta(Usuario usuario, Tipo tipo, int limite) {
 		this.usuario = usuario;
 		this.tipo = tipo;
 		this.saldo = 0;
 		this.limite = limite;
 	}
 	
-	public void sacar() {
-		
+	public void sacar(float valor) {
+		if (valor > getSaldo()) {
+			throw new IllegalArgumentException("Valor solicitado maior do que saldo disponível!");
+		} else {
+			setSaldo(getSaldo() - valor);
+			System.out.println("Operação realizada com sucesso!\nSaldo Atual:" + getSaldo());
+		}
 	}
 	
-	public void depositar() {
-		
+	public void depositar(float valor) {
+		if (valor < 0) {
+			throw new IllegalArgumentException("Valor depositado inválido!");
+		} else {
+			setSaldo(getSaldo() + valor);
+			System.out.println("Operação realizada com sucesso!\nSaldo Atual:" + getSaldo());
+		}
 	}
 	
 	public void mostrarExtrato() {
 		
 	}
-	//mostra extrato, realiza depositos, realiza saques
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+
+	public float getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(float saldo) {
+		this.saldo = saldo;
+	}
+
+	public int getLimite() {
+		return limite;
+	}
+
+	public void setLimite(int limite) {
+		this.limite = limite;
+	}
+	
 	
 }
