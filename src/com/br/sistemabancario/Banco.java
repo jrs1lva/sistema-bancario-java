@@ -2,6 +2,8 @@ package com.br.sistemabancario;
 
 import java.util.ArrayList;
 
+import javax.swing.DefaultRowSorter;
+
 public class Banco {
 	
 	private final String NOME;
@@ -50,19 +52,38 @@ public class Banco {
 		this.contas = contas;
 	}
 	
-    public void cadastrarUsuario() {
-    	
+    public void cadastrarUsuario(Usuario usuario) {
+    	if (cpfExiste(usuario.getCPF())) {
+    		throw new IllegalArgumentException("[ERRO] CPF já cadastrado!");
+    	} else {
+    		usuarios.add(usuario);
+    	}
     }
 	
-    public void criarConta() {
+    public Conta criarConta(String cpf, Tipo tipo) {
     	
+    	return null;
     }
     
-    public Usuario buscarUsuario() {
-		return null;
+    public boolean cpfExiste(String cpf) {
+    	for (Usuario usuario : usuarios) {
+			if(usuario.getCPF().equals(cpf)) {
+				return true;
+			} 
+		}  return false;
+	}
+    
+    public boolean existeUsuario(String cpf) {
+    	
+		for (Usuario usuario : usuarios) {
+			if (usuario.getCPF().equals(cpf)) {
+				return true;
+			}
+		} return false;
+		
     }
     
-    public Conta buscarConta() {
+    public Conta buscarConta(int id) { // usar id ou numero de conta
     	return null;
     }
     
