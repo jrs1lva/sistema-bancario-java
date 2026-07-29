@@ -1,5 +1,6 @@
 package com.br.sistemabancario;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -8,7 +9,7 @@ public class Menu {
 	Scanner scanner = new Scanner(System.in);
 	
 	public void iniciar(Banco banco) {
-		System.out.println("Olá, seja bem vindo ao Banco" + banco);
+		System.out.println("Olá, seja bem vindo ao Banco" + banco.getNOME());
 		System.out.println("Para começar, nos informe seus dados pessoais:");
 		
 		System.out.print("Nome: ");
@@ -19,8 +20,16 @@ public class Menu {
 		
 		System.out.print("\nData de nascimento (dd/MM/yyyy): ");
 		String data = scanner.nextLine();
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate dataNascimento = LocalDate.parse(data, formatter);
+		
+//		try {
+//			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//			LocalDate dataNascimento = LocalDate.parse(data, formatter);
+//		} catch (DateTimeException e) {
+//			System.out.println("Data inválida, digite uma data no formato dd/MM/yyyy");
+//		}
 		
 		System.out.print("\nCPF: ");
 		String cpf = scanner.nextLine();
@@ -29,7 +38,7 @@ public class Menu {
 		Usuario usuario = new Usuario(nome, apelido, dataNascimento, cpf);
 		
 		
-		//String nome, String apelido, LocalDate dataNascimento, String cpf
+		//fazer verificação de data de nascimento e cpf
 		//Apresentação do banco, cadastro do usuário, cadastro no banco, 
 	}
 }

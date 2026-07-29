@@ -87,6 +87,16 @@ public class Banco {
 		}
     }
 
+    
+    
+	public String getNOME() {
+		return NOME;
+	}
+
+	public String getAGENCIA() {
+		return AGENCIA;
+	}
+
 	public String detalhesDoBanco() {
 		return "Nome do Banco:" + NOME + "\n Agência:" + AGENCIA;
 	}
