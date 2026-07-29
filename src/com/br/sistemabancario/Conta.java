@@ -1,77 +1,66 @@
 package com.br.sistemabancario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Conta {
 	
 	private final long ID;
-	private Usuario usuario;
-	private Tipo tipo;
-	private float saldo;
+	private final Usuario USUARIO;
+	private final Tipo TIPO;
+	private double saldo;
+	private List<String> extrato = new ArrayList<>();
 //	private int limite; amadurecer a ideia
 	
-	public Conta(Usuario usuario, Tipo tipo) {
-		this.usuario = usuario;
-		this.tipo = tipo;
+	public Conta(long ID, Usuario usuario, Tipo tipo) {
+		this.USUARIO = usuario;
+		this.TIPO = tipo;
 		this.saldo = 0;
-		this.ID = 1;
+		this.ID = ID;
 	}
 	
-	public void sacar(float valor) {
+	public void sacar(double valor) {
 		if (valor > getSaldo()) {
 			throw new IllegalArgumentException("[ERRO] Valor solicitado maior do que saldo disponível!");
 		} else {
 			setSaldo(getSaldo() - valor);
-			System.out.println("Operação realizada com sucesso!\nSaldo Atual:" + getSaldo());
+			extrato.add(String.format("Saque: R$%.2f", valor, "\nSaldo: R$%.2f", saldo));
 		}
 	}
 	
-	public void depositar(float valor) {
-		if (valor < 0) {
+	public void depositar(double valor) {
+		if (valor <= 0) {
 			throw new IllegalArgumentException("Valor depositado inválido!");
 		} else {
 			setSaldo(getSaldo() + valor);
-			System.out.println("Operação realizada com sucesso!\nSaldo Atual:" + getSaldo());
+			extrato.add(String.format("Depósito: R$%.2f", valor, "\nSaldo: R$%.2f", saldo));
 		}
 	}
 	
 	public void mostrarExtrato() {
+		System.out.println("===== EXTRATO =====\n");
 		
+		//System.out.println(this.extrato);
+		
+		for (String transacao : extrato) {
+			System.out.println(transacao);
+		}
+		
+		System.out.println("\n-------------------");
+		System.out.printf("Saldo Atual: %.2f%n", this.saldo);
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
+	public Usuario getUsuario() {return USUARIO;}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+	public Tipo getTipo() {return TIPO;}
 
-	public Tipo getTipo() {
-		return tipo;
-	}
+	public double getSaldo() {return saldo;}
+	private void setSaldo(double saldo) {this.saldo = saldo;}
 
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
-	}
-
-	public float getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(float saldo) {
-		this.saldo = saldo;
-	}
-
-//	public int getLimite() {
-//		return limite;
-//	}
-//
-//	public void setLimite(int limite) {
-//		this.limite = limite;
-//	}
-
-	public long getID() {
-		return ID;
-	}
+	public long getID() {return ID;}
 	
+//	public int getLimite() {return limite;}
+
+//	public void setLimite(int limite) {is.limite = limite;}
 	
 }
