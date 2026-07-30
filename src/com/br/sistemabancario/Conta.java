@@ -24,7 +24,7 @@ public class Conta {
 			throw new IllegalArgumentException("[ERRO] Valor solicitado maior do que saldo disponível!");
 		} else {
 			setSaldo(getSaldo() - valor);
-			extrato.add(String.format("Saque: R$%.2f", valor, "\nSaldo: R$%.2f", saldo));
+			extrato.add(String.format("Saque: R$ %.2f\nSaldo: R$ %.2f", valor, saldo));
 		}
 	}
 	
@@ -33,7 +33,7 @@ public class Conta {
 			throw new IllegalArgumentException("Valor depositado inválido!");
 		} else {
 			setSaldo(getSaldo() + valor);
-			extrato.add(String.format("Depósito: R$%.2f", valor, "\nSaldo: R$%.2f", saldo));
+			extrato.add(String.format("Depósito: R$ %.2f\nSaldo: R$ %.2f", valor, saldo));
 		}
 	}
 	
