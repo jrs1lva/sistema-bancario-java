@@ -75,15 +75,18 @@ public class Menu {
 			int valorDeposito = scanner.nextInt();
 			
 			conta.depositar(valorDeposito);
+			System.out.println("Operação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
 			break;
 		case 2:
 			System.out.print("Valor do saque: ");
 			int valorSaque = scanner.nextInt();
 			
 			conta.sacar(valorSaque);
+			System.out.println("Operação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
 			break;
 		case 3:
 			conta.mostrarExtrato();
+			break;
 		default:
 			throw new IllegalArgumentException("Valor inválido");
 		}
