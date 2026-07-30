@@ -8,8 +8,11 @@ import java.util.Scanner;
 public class Menu {
 	Scanner scanner = new Scanner(System.in);
 	
-	public void run(Banco banco) {
-		System.out.println("Olá, seja bem vindo ao Banco" + banco.getNOME());
+	
+	//fazer laço de repetição, separar classes, fazer validações
+	public void cadastrarUsuario(Banco banco) {
+		
+		System.out.println("Olá, seja bem vindo ao Banco " + banco.getNOME());
 		System.out.println("Para começar, nos informe seus dados pessoais:");
 		
 		System.out.print("Nome completo: ");
@@ -37,9 +40,9 @@ public class Menu {
 		
 		Usuario usuario = new Usuario(nome, apelido, dataNascimento, cpf);
 		banco.cadastrarUsuario(usuario);
-		
-//		System.out.println("Aguarde um momento, estamos processando suas informações!");
-		
+	}
+	
+	public void criarConta(Banco banco, Usuario usuario) {
 		System.out.println("\nQual tipo de conta se encaixa mais no seu perfil:\n[1] CORRENTE | [2] POUPANÇA");
 		int opcao = scanner.nextInt();
 		
@@ -59,11 +62,19 @@ public class Menu {
 				throw new IllegalArgumentException("Valor inválido");
 		}
 		
-		efetuarTransacoes(banco.criarConta(cpf, tipo), banco);
+		menuPrincipal(banco.criarConta(cpf, tipo), banco);
 		//fazer verificação de data de nascimento e cpf
 	}
 	
-	public void efetuarTransacoes(Conta conta, Banco banco) {
+	public void run(Banco banco) {
+		
+		
+//		System.out.println("Aguarde um momento, estamos processando suas informações!");
+		
+		
+	}
+	
+	public void menuPrincipal(Conta conta, Banco banco) {
 		System.out.println("Parabéns por efetuar seu cadastro no banco " + conta.getUsuario().getApelido());
 		System.out.println("Qual funcionalidade deseja utilizar?\n [1] Depositar | [2] Sacar | [3] Mostrar Extrato");
 		int opcao = scanner.nextInt();
