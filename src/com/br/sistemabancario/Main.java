@@ -8,6 +8,8 @@ public class Main {
 		Menu banco = new Menu();
 		
 		banco.run(Bradesco);
+		
+		
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.br.sistemabancario;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -8,9 +7,20 @@ import java.util.Scanner;
 public class Menu {
 	Scanner scanner = new Scanner(System.in);
 	
-	
 	//fazer laço de repetição, separar classes, fazer validações
-	public void cadastrarUsuario(Banco banco) {
+	//return true; if false (encerrar aplicativo)
+	
+	public void run(Banco banco) {
+		Usuario usuario = cadastrarUsuario(banco);
+		if (usuario != null) {
+			Conta conta = criarConta(banco, usuario);
+			if (conta != null) {
+				menuPrincipal(conta, banco);
+			}
+		}
+	}
+	
+	private Usuario cadastrarUsuario(Banco banco) {
 		
 		System.out.println("Olá, seja bem vindo ao Banco " + banco.getNOME());
 		System.out.println("Para começar, nos informe seus dados pessoais:");
@@ -21,6 +31,7 @@ public class Menu {
 		System.out.print("\nPrefere ser chamado de: ");
 		String apelido = scanner.nextLine();
 		
+		//validação na data de nascimento
 		System.out.print("\nData de nascimento (dd/MM/yyyy): ");
 		String data = scanner.nextLine();
 		
@@ -40,67 +51,78 @@ public class Menu {
 		
 		Usuario usuario = new Usuario(nome, apelido, dataNascimento, cpf);
 		banco.cadastrarUsuario(usuario);
+		
+		return usuario;
 	}
 	
-	public void criarConta(Banco banco, Usuario usuario) {
-		System.out.println("\nQual tipo de conta se encaixa mais no seu perfil:\n[1] CORRENTE | [2] POUPANÇA");
-		int opcao = scanner.nextInt();
+	private Conta criarConta(Banco banco, Usuario usuario) {
 		
-		Tipo tipo;
+		int opcao;
+		Tipo tipo = null;
 		
-		switch (opcao) {
-		
-			case 1:
-				tipo = Tipo.CORRENTE;
-				break;
+		do {
+			System.out.println("\nQual tipo de conta se encaixa mais no seu perfil:\n[1] CORRENTE | [2] POUPANÇA");
+			opcao = scanner.nextInt();
 			
-			case 2:
-				tipo = Tipo.POUPANCA;
-				break;
+			switch (opcao) {
+			
+				case 1:
+					tipo = Tipo.CORRENTE;
+					break;
 				
-			default:
-				throw new IllegalArgumentException("Valor inválido");
-		}
+				case 2:
+					tipo = Tipo.POUPANCA;
+					break;
+					
+				default:
+					throw new IllegalArgumentException("Valor inválido");
+			}
+		} while (opcao!= 1 && opcao != 2);
 		
-		menuPrincipal(banco.criarConta(cpf, tipo), banco);
-		//fazer verificação de data de nascimento e cpf
-	}
-	
-	public void run(Banco banco) {
-		
-		
-//		System.out.println("Aguarde um momento, estamos processando suas informações!");
-		
-		
+		Conta conta = banco.criarConta(usuario.getCPF(), tipo);
+		return conta;
 	}
 	
 	public void menuPrincipal(Conta conta, Banco banco) {
-		System.out.println("Parabéns por efetuar seu cadastro no banco " + conta.getUsuario().getApelido());
-		System.out.println("Qual funcionalidade deseja utilizar?\n [1] Depositar | [2] Sacar | [3] Mostrar Extrato");
-		int opcao = scanner.nextInt();
+		System.out.println("\nParabéns por efetuar seu cadastro no banco, " + conta.getUsuario().getApelido());
+		int opcao;
 		
-		switch (opcao) {
-		
-		case 1:
-			System.out.print("Valor do depósito: ");
-			int valorDeposito = scanner.nextInt();
+		do {
+			System.out.println("\nQual funcionalidade deseja utilizar?\n[1] Depositar | [2] Sacar | [3] Mostrar Extrato | [4] Encerrar aplicativo");
+			opcao = scanner.nextInt();
 			
-			conta.depositar(valorDeposito);
-			System.out.println("Operação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
-			break;
-		case 2:
-			System.out.print("Valor do saque: ");
-			int valorSaque = scanner.nextInt();
+			switch (opcao) {
 			
-			conta.sacar(valorSaque);
-			System.out.println("Operação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
-			break;
-		case 3:
-			conta.mostrarExtrato();
-			break;
-		default:
-			throw new IllegalArgumentException("Valor inválido");
-		}
+			
+			
+			case 1:
+				System.out.print("\nValor do depósito: ");
+				int valorDeposito = scanner.nextInt();
+				
+				conta.depositar(valorDeposito);
+				System.out.println("\nOperação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
+				break;
+				
+			case 2:
+				System.out.print("\nValor do saque: ");
+				int valorSaque = scanner.nextInt();
+				
+				conta.sacar(valorSaque);
+				System.out.println("\nOperação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
+				break;
+				
+			case 3:
+				conta.mostrarExtrato();
+				break;
+				
+			case 4:
+				System.out.printf("\nSistema encerrado!\nSaldo Final: %.2f", conta.getSaldo());
+				break;
+				
+			default:
+				throw new IllegalArgumentException("\nValor inválido");
+			}
+		} while (opcao != 4);
 		
 	}
 }
