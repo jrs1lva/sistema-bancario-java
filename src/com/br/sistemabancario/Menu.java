@@ -23,36 +23,39 @@ public class Menu {
 	private Usuario cadastrarUsuario(Banco banco) {
 		
 		System.out.println("Olá, seja bem vindo ao Banco " + banco.getNOME());
-		System.out.println("Para começar, nos informe seus dados pessoais:");
-		
-		System.out.print("Nome completo: ");
-		String nome = scanner.nextLine();
-		
-		System.out.print("\nPrefere ser chamado de: ");
-		String apelido = scanner.nextLine();
-		
-		//validação na data de nascimento
-		System.out.print("\nData de nascimento (dd/MM/yyyy): ");
-		String data = scanner.nextLine();
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate dataNascimento = LocalDate.parse(data, formatter);
-		
-//		try {
-//			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//			LocalDate dataNascimento = LocalDate.parse(data, formatter);
-//		} catch (DateTimeException e) {
-//			System.out.println("Data inválida, digite uma data no formato dd/MM/yyyy");
-//		}
-		
-		System.out.print("\nCPF: ");
-		String cpf = scanner.nextLine();
-		
-		
-		Usuario usuario = new Usuario(nome, apelido, dataNascimento, cpf);
-		banco.cadastrarUsuario(usuario);
-		
-		return usuario;
+	    System.out.println("Para começar, nos informe seus dados pessoais:");
+	    
+	    System.out.print("Nome completo: ");
+	    String nome = scanner.nextLine();
+	    
+	    System.out.print("\nPrefere ser chamado de: ");
+	    String apelido = scanner.nextLine();
+	    
+	    // 1. Declaramos a variável fora do loop
+	    LocalDate dataNascimento = null;
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    boolean dataValida = false;
+	    
+	    // 2. Laço de repetição até a data ser válida
+	    while (!dataValida) {
+	        System.out.print("\nData de nascimento (dd/MM/yyyy): ");
+	        String data = scanner.nextLine();
+	        
+	        try {
+	            dataNascimento = LocalDate.parse(data, formatter);
+	            dataValida = true; // Se não lançou exceção, a data é válida e sai do loop!
+	        } catch (java.time.format.DateTimeParseException e) {
+	            System.out.println("Data inválida! Por favor, digite no formato dd/MM/yyyy (ex: 04/03/2004).");
+	        }
+	    }
+	    
+	    System.out.print("\nCPF: ");
+	    String cpf = scanner.nextLine();
+	    
+	    Usuario usuario = new Usuario(nome, apelido, dataNascimento, cpf);
+	    banco.cadastrarUsuario(usuario);
+	    
+	    return usuario;
 	}
 	
 	private Conta criarConta(Banco banco, Usuario usuario) {
