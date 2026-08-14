@@ -9,6 +9,9 @@ public class Menu {
 	
 	//fazer laço de repetição, separar classes, fazer validações
 	//return true; if false (encerrar aplicativo)
+	//diferenças entre a conta corrente e poupança 
+	//fazer laço no run para caso dê erro na formação do usuario, ele voltar
+	//fazer validacao da idade
 	
 	public void run(Banco banco) {
 		Usuario usuario = cadastrarUsuario(banco);
@@ -31,19 +34,17 @@ public class Menu {
 	    System.out.print("\nPrefere ser chamado de: ");
 	    String apelido = scanner.nextLine();
 	    
-	    // 1. Declaramos a variável fora do loop
 	    LocalDate dataNascimento = null;
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	    boolean dataValida = false;
 	    
-	    // 2. Laço de repetição até a data ser válida
 	    while (!dataValida) {
 	        System.out.print("\nData de nascimento (dd/MM/yyyy): ");
 	        String data = scanner.nextLine();
 	        
 	        try {
 	            dataNascimento = LocalDate.parse(data, formatter);
-	            dataValida = true; // Se não lançou exceção, a data é válida e sai do loop!
+	            dataValida = true;
 	        } catch (java.time.format.DateTimeParseException e) {
 	            System.out.println("Data inválida! Por favor, digite no formato dd/MM/yyyy (ex: 04/03/2004).");
 	        }
@@ -95,24 +96,33 @@ public class Menu {
 			opcao = scanner.nextInt();
 			
 			switch (opcao) {
-			
-			
-			
 			case 1:
-				System.out.print("\nValor do depósito: ");
-				int valorDeposito = scanner.nextInt();
+				try {
+					System.out.print("\nValor do depósito: ");
+					int valorDeposito = scanner.nextInt();
+					
+					conta.depositar(valorDeposito);
+					System.out.println("\nOperação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
+					break;
+				} catch (IllegalArgumentException e) {
+					System.err.println("[FALHA NA OPERAÇÃO] " + e.getMessage());
+					break;
+				}
 				
-				conta.depositar(valorDeposito);
-				System.out.println("\nOperação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
-				break;
 				
 			case 2:
-				System.out.print("\nValor do saque: ");
-				int valorSaque = scanner.nextInt();
+				try {
+					System.out.print("\nValor do saque: ");
+					int valorSaque = scanner.nextInt();
+					
+					conta.sacar(valorSaque);
+					System.out.println("\nOperação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
+					break;
+				} catch (IllegalArgumentException e) {
+					System.err.println("[FALHA NA OPERAÇÃO] " + e.getMessage());
+					break;
+				}
 				
-				conta.sacar(valorSaque);
-				System.out.println("\nOperação realizada com sucesso!\nSaldo atual: R$ " + conta.getSaldo());
-				break;
 				
 			case 3:
 				conta.mostrarExtrato();

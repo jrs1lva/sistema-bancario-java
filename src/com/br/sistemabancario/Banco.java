@@ -11,7 +11,7 @@ public class Banco {
     private List<Usuario> usuarios;
     private List<Conta> contas;
     
-    private long proximoId = 1;
+    private static long proximoId = 1;
     
 	public Banco(String nome, String agencia) {
 		this.NOME = nome;

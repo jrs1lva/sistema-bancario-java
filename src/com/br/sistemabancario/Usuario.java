@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Usuario {
+	
+	//validação de cpf
+	
 	private final String nome;
 	private String apelido;
 	private final LocalDate DATANASCIMENTO;
@@ -11,9 +14,7 @@ public class Usuario {
 	
 	public Usuario(String nome, String apelido, LocalDate dataNascimento, String cpf) {
 		
-		int idade = Period.between(dataNascimento, LocalDate.now()).getYears();
-		
-		if (idade < 18) {
+		if (!isMaiorDeIdade(dataNascimento)) {
 			throw new IllegalArgumentException("É necessário ser maior de idade para criar uma conta");
 		}
 		
@@ -22,11 +23,16 @@ public class Usuario {
 		DATANASCIMENTO = dataNascimento;
 		CPF = cpf;
 	}
-
+	
+	public boolean isMaiorDeIdade(LocalDate data) {
+		int idade = Period.between(data, LocalDate.now()).getYears();
+		return idade >= 18;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
-
+	
 	public String getApelido() {
 		return apelido;
 	}
