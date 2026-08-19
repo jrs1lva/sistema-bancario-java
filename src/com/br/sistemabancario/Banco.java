@@ -87,8 +87,6 @@ public class Banco {
 		}
     }
 
-    
-    
 	public String getNOME() {
 		return NOME;
 	}

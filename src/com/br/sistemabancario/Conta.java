@@ -21,7 +21,9 @@ public class Conta {
 	
 	public void sacar(double valor) {
 		if (valor > getSaldo()) {
-			throw new IllegalArgumentException("Valor solicitado maior do que saldo disponível!");
+			throw new IllegalArgumentException("O valor de saque deve ser menor ou igual ao saldo disponível.");
+		} else if (valor <= 0) {
+			throw new IllegalArgumentException("O valor de saque deve ser maior do que 0.");
 		} else {
 			setSaldo(getSaldo() - valor);
 			extrato.add(String.format("Saque: R$ %.2f\nSaldo: R$ %.2f", valor, saldo));
@@ -30,7 +32,7 @@ public class Conta {
 	
 	public boolean depositar(double valor) {
 		if (valor <= 0) {
-			throw new IllegalArgumentException("Valor depositado inválido!");
+			throw new IllegalArgumentException("O valor depositado deve ser maior do que 0.");
 		} else {
 			setSaldo(getSaldo() + valor);
 			extrato.add(String.format("Depósito: R$ %.2f\nSaldo: R$ %.2f", valor, saldo));
