@@ -24,7 +24,7 @@ public class Usuario {
 		CPF = cpf;
 	}
 	
-	public boolean isMaiorDeIdade(LocalDate data) {
+	public static boolean isMaiorDeIdade(LocalDate data) {
 		int idade = Period.between(data, LocalDate.now()).getYears();
 		return idade >= 18;
 	}

@@ -2,19 +2,14 @@ package com.br.sistemabancario;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class Menu {
 	Scanner scanner = new Scanner(System.in);
 	
 	//poder criar mais de uma conta para utilizar o listar contas/usuarios
-	//fazer laço de repetição, separar classes, fazer validações
-	//return true; if false (encerrar aplicativo)
-	//diferenças entre a conta corrente e poupança 
-	//fazer laço no run para caso dê erro na formação do usuario, ele voltar
-	//fazer validacao de menor de idade
-	//tratar laço de repeticao das funcionalidades
+	//diferenças entre a conta corrente e poupança
+	//acrescentar banco de dados
 	
 	public void run(Banco banco) {
 		Usuario usuario = cadastrarUsuario(banco);
@@ -26,7 +21,6 @@ public class Menu {
 		}
 	}
 	
-
 	private Usuario cadastrarUsuario(Banco banco) {
 		
 		System.out.println("Olá, seja bem vindo ao Banco " + banco.getNOME());
@@ -53,12 +47,19 @@ public class Menu {
 	        System.out.print("\nData de nascimento (dd/MM/yyyy): ");
 	        String data = scanner.nextLine();
 	        
+	        
 	        try {
 	            dataNascimento = LocalDate.parse(data, formatter);
-	            dataValida = true;
+	            
+	            if (!Usuario.isMaiorDeIdade(dataNascimento)) {
+	            	System.err.println("\n[ERRO] É necessário ter pelo menos 18 anos para abrir uma conta.");
+					pausar(2000);
+	            } else {
+	            	dataValida = true;
+	            }
 	        } catch (java.time.format.DateTimeParseException e) {
-	            System.out.println("\nData inválida. Por favor, digite no formato dd/MM/yyyy (ex: 04/03/2004).");
-	        } //lançar exception de menor de idade
+	        	System.err.println("\n[ERRO] Data inválida. Por favor, digite no formato dd/MM/yyyy (ex: 04/03/2004).");
+	        }
 	    }
 	    
 	    pausar(500);
@@ -107,7 +108,7 @@ public class Menu {
 		System.out.println("\nParabéns por efetuar seu cadastro no banco, " + conta.getUsuario().getApelido());
 		int opcao;
 		
-		pausar(1000);
+		pausar(2000);
 		
 		do {
 			limparTela();
@@ -129,6 +130,7 @@ public class Menu {
 					break;
 				} catch (IllegalArgumentException e) {
 					System.err.println("\n[FALHA NA OPERAÇÃO] " + e.getMessage());
+					pausar(5000);
 					break;
 				}
 				
@@ -145,17 +147,18 @@ public class Menu {
 					break;
 				} catch (IllegalArgumentException e) {
 					System.err.println("\n[FALHA NA OPERAÇÃO] " + e.getMessage());
+					pausar(5000);
 					break;
 				}
 				
 				
 			case 3:
 				conta.mostrarExtrato();
-				pausar(5000);
+				pausar(10000);
 				break;
 				
 			case 4:
-				pausar(1000, "Encerrando aplicativo...");
+				pausar(1000, "\nEncerrando aplicativo...");
 				System.out.printf("\nSistema encerrado.\nSaldo Final: %.2f", conta.getSaldo());
 				break;
 				
