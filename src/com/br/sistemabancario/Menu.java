@@ -7,9 +7,11 @@ import java.util.Scanner;
 public class Menu {
 	Scanner scanner = new Scanner(System.in);
 	
-	//poder criar mais de uma conta para utilizar o listar contas/usuarios
+	//poder criar mais de uma conta para utilizar p listar contas/usuarios (SÓ FAZ SENTIDO COM BANCO DE DADOS)
 	//diferenças entre a conta corrente e poupança
 	//acrescentar banco de dados
+	//verificar se já possui uma conta antes de entrar reaproveitar os dados salvos
+	//utilizar interface
 	
 	public void run(Banco banco) {
 		Usuario usuario = cadastrarUsuario(banco);
